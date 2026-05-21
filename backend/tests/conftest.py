@@ -21,3 +21,18 @@ def sample_pdf_path(tmp_path: Path) -> Path:
     c.drawString(100, 730, "Juan Perez 22.846.782-0 Lo Espejo")
     c.save()
     return p
+
+
+@pytest.fixture
+def sample_docx_path(tmp_path: Path) -> Path:
+    from docx import Document
+    p = tmp_path / "sample.docx"
+    d = Document()
+    d.add_paragraph("RUC 2600664806-0 RIT 2903-2026")
+    tabla = d.add_table(rows=2, cols=2)
+    tabla.cell(0, 0).text = "NOMBRE IMPUTADO"
+    tabla.cell(0, 1).text = "RUT"
+    tabla.cell(1, 0).text = "Juan Pérez"
+    tabla.cell(1, 1).text = "22.846.782-0"
+    d.save(str(p))
+    return p
