@@ -60,10 +60,17 @@ async function procesar() {
       @dragleave="dragOver = false"
       @drop="onDrop"
     >
-      <p>Arrastre aquí los documentos (PDF o DOCX) o</p>
+      <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+      <p class="dz-title">Arrastre aquí los documentos</p>
+      <p class="dz-hint">Formatos aceptados: PDF · DOCX</p>
       <label class="select">
         <input type="file" multiple accept=".pdf,.docx" @change="onChange" />
-        seleccionar archivos
+        Seleccionar archivos
       </label>
     </div>
 
@@ -84,24 +91,89 @@ async function procesar() {
       {{ procesando ? 'Procesando…' : 'Procesar documentos' }}
     </button>
 
-    <p v-if="error" class="error">{{ error }}</p>
+    <p v-if="error" class="error" role="alert">{{ error }}</p>
   </section>
 </template>
 
 <style scoped>
-.drop-zone-wrap { display: flex; flex-direction: column; gap: 12px; }
+.drop-zone-wrap { display: flex; flex-direction: column; gap: var(--sp-3); }
+
 .drop-zone {
-  border: 2px dashed #d0d7de; border-radius: 8px; padding: 24px;
-  text-align: center; background: #f6f8fa; transition: background 0.15s;
+  display: flex; flex-direction: column; align-items: center; gap: var(--sp-2);
+  border: 2px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--sp-8) var(--sp-4);
+  text-align: center;
+  background: var(--color-surface);
+  color: var(--color-fg-muted);
+  transition: background var(--t-base), border-color var(--t-base);
 }
-.drop-zone.over { background: #ddf4ff; border-color: #0969da; }
-.select { display: inline-block; color: #0969da; cursor: pointer; text-decoration: underline; }
+.drop-zone.over {
+  background: rgba(30, 58, 95, 0.04);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.upload-icon {
+  width: 40px; height: 40px;
+  color: var(--color-primary);
+  opacity: 0.7;
+}
+
+.dz-title {
+  margin: 0; font-size: var(--fs-base); font-weight: var(--fw-semibold);
+  color: var(--color-fg);
+}
+.dz-hint {
+  margin: 0; font-size: var(--fs-xs);
+  color: var(--color-fg-subtle); letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.select {
+  display: inline-flex; align-items: center;
+  margin-top: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--color-surface-muted);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+.select:hover { background: var(--color-surface); border-color: var(--color-primary); }
 .select input { display: none; }
-.lista { display: flex; flex-direction: column; gap: 6px; }
+
+.lista { display: flex; flex-direction: column; gap: var(--sp-1); }
+
 .primary {
-  background: #0969da; color: #fff; border: none; border-radius: 6px;
-  padding: 10px 16px; font-size: 0.95rem; cursor: pointer;
+  min-height: var(--control-h-lg);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border: 1px solid var(--color-primary);
+  padding: 0 var(--sp-4);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
 }
-.primary:disabled { opacity: 0.5; cursor: not-allowed; }
-.error { color: #cf222e; font-size: 0.9rem; }
+.primary:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+.primary:disabled {
+  opacity: 0.45;
+  background: var(--color-fg-subtle);
+  border-color: var(--color-fg-subtle);
+}
+
+.error {
+  color: var(--color-danger);
+  background: var(--color-danger-bg);
+  border: 1px solid #FECACA;
+  border-radius: var(--radius);
+  padding: var(--sp-2) var(--sp-3);
+  font-size: var(--fs-sm);
+  margin: 0;
+}
 </style>

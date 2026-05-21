@@ -39,11 +39,32 @@ const cat = useCatalogosStore()
 </template>
 
 <style scoped>
-fieldset { border: 1px solid #d0d7de; border-radius: 6px; padding: 12px; }
-legend { font-weight: 600; padding: 0 6px; }
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+fieldset {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--sp-4) var(--sp-5);
+}
+legend {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-md);
+  color: var(--color-primary);
+  padding: 0 var(--sp-2);
+}
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3) var(--sp-4); margin-top: var(--sp-2); }
 .full { grid-column: 1 / -1; }
-.checkbox { flex-direction: row; align-items: center; gap: 8px; }
-label { display: flex; flex-direction: column; font-size: 0.85rem; gap: 4px; }
-input { padding: 6px 8px; border: 1px solid #d0d7de; border-radius: 4px; font-size: 0.95rem; }
+.checkbox {
+  flex-direction: row; align-items: center; gap: var(--sp-2);
+  padding: var(--sp-2) 0; color: var(--color-fg);
+}
+.checkbox input[type="checkbox"] {
+  width: 18px; height: 18px; min-height: 0; padding: 0;
+  accent-color: var(--color-primary);
+}
+label {
+  display: flex; flex-direction: column; gap: var(--sp-1);
+  font-size: var(--fs-sm); font-weight: var(--fw-medium); color: var(--color-fg-muted);
+}
 </style>

@@ -38,15 +38,52 @@ async function elegir(sigla: string, estado: string) {
 </template>
 
 <style scoped>
-fieldset { border: 1px solid #d0d7de; border-radius: 6px; padding: 12px; }
-legend { font-weight: 600; padding: 0 6px; }
-.botonera { display: flex; flex-wrap: wrap; gap: 6px; }
-.btn-medida {
-  border: 1px solid #d0d7de; background: #f6f8fa; color: #24292f;
-  padding: 6px 14px; border-radius: 6px; cursor: pointer;
-  font-weight: 600; font-size: 0.9rem; min-width: 64px;
+fieldset {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--sp-4) var(--sp-5);
 }
-.btn-medida.activa { background: #0969da; color: #fff; border-color: #0969da; }
-.btn-medida.pendiente { opacity: 0.45; cursor: not-allowed; }
-.btn-medida:hover:not(.pendiente):not(.activa) { background: #e6e8ea; }
+legend {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-md);
+  color: var(--color-primary);
+  padding: 0 var(--sp-2);
+}
+.botonera {
+  display: flex; flex-wrap: wrap; gap: var(--sp-2);
+  margin-top: var(--sp-2);
+}
+.btn-medida {
+  min-height: var(--control-h-lg);
+  min-width: 72px;
+  padding: 0 var(--sp-4);
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-fg);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.02em;
+  transition: background var(--t-fast), border-color var(--t-fast),
+              color var(--t-fast), transform var(--t-fast);
+}
+.btn-medida:hover:not(.pendiente):not(.activa) {
+  background: var(--color-surface-muted);
+  border-color: var(--color-primary);
+}
+.btn-medida.activa {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+.btn-medida.pendiente {
+  opacity: 0.40;
+  background: var(--color-surface-muted);
+}
+.btn-medida:active:not(.pendiente) { transform: translateY(1px); }
 </style>

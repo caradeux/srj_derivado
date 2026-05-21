@@ -60,11 +60,52 @@ const opcionesIpIrc = computed(() =>
 </template>
 
 <style scoped>
-fieldset { border: 1px solid #d0d7de; border-radius: 6px; padding: 12px; }
-legend { font-weight: 600; padding: 0 6px; }
-label { font-size: 0.9rem; }
-select { padding: 6px 8px; border: 1px solid #d0d7de; border-radius: 4px; }
-.opt { display: flex; align-items: center; gap: 8px; padding: 2px 0; }
-.error { color: #cf222e; font-size: 0.9rem; }
-.info { color: #1a7f37; font-size: 0.9rem; }
+fieldset {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--sp-4) var(--sp-5);
+}
+legend {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-md);
+  color: var(--color-primary);
+  padding: 0 var(--sp-2);
+}
+label {
+  display: flex; flex-direction: column; gap: var(--sp-1);
+  font-size: var(--fs-sm); font-weight: var(--fw-medium);
+  color: var(--color-fg-muted);
+  margin-top: var(--sp-2);
+}
+.opt {
+  display: flex; flex-direction: row; align-items: center; gap: var(--sp-2);
+  padding: var(--sp-1) 0; font-size: var(--fs-sm);
+  color: var(--color-fg); cursor: pointer;
+  margin-top: 0;
+}
+.opt input[type="radio"] {
+  width: 18px; height: 18px; min-height: 0; padding: 0;
+  accent-color: var(--color-primary);
+}
+.error {
+  color: var(--color-danger);
+  background: var(--color-danger-bg);
+  border: 1px solid #FECACA;
+  border-radius: var(--radius);
+  padding: var(--sp-2) var(--sp-3);
+  font-size: var(--fs-sm);
+  margin: var(--sp-2) 0 0;
+}
+.info {
+  color: var(--color-success);
+  background: var(--color-success-bg);
+  border: 1px solid #A7F3D0;
+  border-radius: var(--radius);
+  padding: var(--sp-2) var(--sp-3);
+  font-size: var(--fs-sm);
+  margin: var(--sp-2) 0 0;
+}
 </style>

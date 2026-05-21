@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import { useCatalogosStore } from './stores/catalogos'
+import './styles/tokens.css'
 
 const app = createApp(App)
 app.use(createPinia())

@@ -19,7 +19,28 @@ const s = useCasoStore()
 </template>
 
 <style scoped>
-.aviso { border: 1px solid #f6c244; background: #fff8c5; border-radius: 6px; padding: 12px; }
-legend { font-weight: 600; padding: 0 6px; }
-.opt { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; padding: 2px 0; }
+.aviso {
+  background: var(--color-warning-bg);
+  border: 1px solid #FBBF24;
+  border-left: 4px solid var(--color-warning);
+  border-radius: var(--radius-md);
+  padding: var(--sp-4) var(--sp-5);
+  box-shadow: var(--shadow-sm);
+}
+legend {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-md);
+  color: var(--color-warning);
+  padding: 0 var(--sp-2);
+}
+.opt {
+  display: flex; align-items: center; gap: var(--sp-2);
+  font-size: var(--fs-sm); color: var(--color-fg);
+  padding: var(--sp-1) 0; cursor: pointer;
+}
+.opt input[type="radio"] {
+  width: 18px; height: 18px; min-height: 0; padding: 0;
+  accent-color: var(--color-primary);
+}
 </style>
