@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { useCasoStore } from '../../stores/caso'
+import Icon from '../Icon.vue'
 const s = useCasoStore()
 </script>
 
 <template>
   <fieldset v-if="s.candidatos.length > 1" class="aviso">
-    <legend>Se detectaron {{ s.candidatos.length }} personas. Seleccione el imputado:</legend>
+    <legend>
+      <Icon name="alert-circle" :size="18" />
+      <span>Se detectaron {{ s.candidatos.length }} personas. Seleccione el imputado:</span>
+    </legend>
     <label v-for="(c, i) in s.candidatos" :key="c.run + i" class="opt">
       <input
         type="radio" name="coimputado"

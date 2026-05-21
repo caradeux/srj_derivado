@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { useCasoStore } from '../../stores/caso'
 import { useCatalogosStore } from '../../stores/catalogos'
+import Icon from '../Icon.vue'
 const s = useCasoStore()
 const cat = useCatalogosStore()
 </script>
 
 <template>
   <fieldset>
-    <legend>Datos de la causa</legend>
+    <legend>
+      <Icon name="file-text" :size="18" />
+      <span>Datos de la causa</span>
+    </legend>
     <div class="grid">
       <label class="full">Tribunal
         <input v-model="s.causa.tribunal" type="text" />
@@ -47,12 +51,14 @@ fieldset {
   padding: var(--sp-4) var(--sp-5);
 }
 legend {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
   font-family: var(--font-heading);
   font-weight: var(--fw-semibold);
   font-size: var(--fs-md);
   color: var(--color-primary);
   padding: 0 var(--sp-2);
 }
+legend :deep(.icon) { color: var(--color-accent); }
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3) var(--sp-4); margin-top: var(--sp-2); }
 .full { grid-column: 1 / -1; }
 .checkbox {

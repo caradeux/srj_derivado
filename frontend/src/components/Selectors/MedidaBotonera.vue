@@ -2,6 +2,7 @@
 import { useCasoStore } from '../../stores/caso'
 import { useCatalogosStore } from '../../stores/catalogos'
 import type { Medida } from '../../api/client'
+import Icon from '../Icon.vue'
 
 const s = useCasoStore()
 const cat = useCatalogosStore()
@@ -15,7 +16,10 @@ async function elegir(sigla: string, estado: string) {
 
 <template>
   <fieldset>
-    <legend>Medida</legend>
+    <legend>
+      <Icon name="scale" :size="18" />
+      <span>Medida</span>
+    </legend>
     <div class="botonera">
       <button
         v-for="m in cat.medidas"
@@ -46,12 +50,14 @@ fieldset {
   padding: var(--sp-4) var(--sp-5);
 }
 legend {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
   font-family: var(--font-heading);
   font-weight: var(--fw-semibold);
   font-size: var(--fs-md);
   color: var(--color-primary);
   padding: 0 var(--sp-2);
 }
+legend :deep(.icon) { color: var(--color-accent); }
 .botonera {
   display: flex; flex-wrap: wrap; gap: var(--sp-2);
   margin-top: var(--sp-2);

@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { useCasoStore } from '../../stores/caso'
+import Icon from '../Icon.vue'
 const s = useCasoStore()
 </script>
 
 <template>
   <fieldset>
-    <legend>Datos del adolescente</legend>
+    <legend>
+      <Icon name="user" :size="18" />
+      <span>Datos del adolescente</span>
+    </legend>
     <div class="grid">
       <label>Nombre
         <input v-model="s.adolescente.nombre" type="text" />
@@ -39,12 +43,14 @@ fieldset {
   padding: var(--sp-4) var(--sp-5);
 }
 legend {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
   font-family: var(--font-heading);
   font-weight: var(--fw-semibold);
   font-size: var(--fs-md);
   color: var(--color-primary);
   padding: 0 var(--sp-2);
 }
+legend :deep(.icon) { color: var(--color-accent); }
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3) var(--sp-4); margin-top: var(--sp-2); }
 .full { grid-column: 1 / -1; }
 label {

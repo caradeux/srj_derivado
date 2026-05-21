@@ -9,6 +9,7 @@ import CentroSelector from './components/Selectors/CentroSelector.vue'
 import GenerarButton from './components/Actions/GenerarButton.vue'
 import LimpiarButton from './components/Actions/LimpiarButton.vue'
 import Login from './components/Login.vue'
+import Icon from './components/Icon.vue'
 import { useCasoStore } from './stores/caso'
 import { useAuthStore } from './stores/auth'
 const s = useCasoStore()
@@ -54,13 +55,19 @@ const auth = useAuthStore()
 
   <main id="contenido">
     <section class="col-izq" aria-label="Carga de documentos">
-      <h2 class="section-title">1. Cargar documentos judiciales</h2>
+      <h2 class="section-title">
+        <Icon name="folder-open" :size="20" />
+        <span>1. Cargar documentos judiciales</span>
+      </h2>
       <DropZone />
       <CoimputadoRadio />
     </section>
 
     <section class="col-der" aria-label="Datos de la derivación">
-      <h2 class="section-title">2. Revisar y completar datos</h2>
+      <h2 class="section-title">
+        <Icon name="clipboard-check" :size="20" />
+        <span>2. Revisar y completar datos</span>
+      </h2>
       <DatosAdolescente />
       <DatosCausa />
       <AdultoResponsable />
@@ -68,18 +75,16 @@ const auth = useAuthStore()
       <CentroSelector />
 
       <div class="generar-wrap">
-        <h2 class="section-title">3. Generar certificado</h2>
+        <h2 class="section-title">
+          <Icon name="award" :size="20" />
+          <span>3. Generar certificado</span>
+        </h2>
         <GenerarButton />
       </div>
 
       <ul v-if="s.warnings.length > 0" class="warns" role="status" aria-live="polite">
         <li v-for="w in s.warnings" :key="w">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-               stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-            <line x1="12" y1="9" x2="12" y2="13"/>
-            <line x1="12" y1="17" x2="12.01" y2="17"/>
-          </svg>
+          <Icon name="alert-triangle" :size="18" />
           <span>{{ w }}</span>
         </li>
       </ul>
@@ -183,6 +188,7 @@ main {
 }
 
 .section-title {
+  display: flex; align-items: center; gap: var(--sp-2);
   font-family: var(--font-heading);
   font-size: var(--fs-md);
   font-weight: var(--fw-semibold);
@@ -192,6 +198,7 @@ main {
   padding-bottom: var(--sp-2);
   border-bottom: 1px solid var(--color-border);
 }
+.section-title :deep(.icon) { color: var(--color-accent); }
 
 .generar-wrap { margin-top: var(--sp-2); }
 

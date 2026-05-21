@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useCasoStore } from '../../stores/caso'
 import { useCatalogosStore } from '../../stores/catalogos'
+import Icon from '../Icon.vue'
 
 const s = useCasoStore()
 const cat = useCatalogosStore()
@@ -14,7 +15,10 @@ const opcionesIpIrc = computed(() =>
 
 <template>
   <fieldset v-if="s.medida">
-    <legend>Centro de cumplimiento</legend>
+    <legend>
+      <Icon name="map-pin" :size="18" />
+      <span>Centro de cumplimiento</span>
+    </legend>
 
     <!-- IP/IRC: dropdown desde catálogo hardcoded -->
     <div v-if="esIpIrc">
@@ -68,12 +72,14 @@ fieldset {
   padding: var(--sp-4) var(--sp-5);
 }
 legend {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
   font-family: var(--font-heading);
   font-weight: var(--fw-semibold);
   font-size: var(--fs-md);
   color: var(--color-primary);
   padding: 0 var(--sp-2);
 }
+legend :deep(.icon) { color: var(--color-accent); }
 label {
   display: flex; flex-direction: column; gap: var(--sp-1);
   font-size: var(--fs-sm); font-weight: var(--fw-medium);
