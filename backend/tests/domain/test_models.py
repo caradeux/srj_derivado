@@ -36,3 +36,21 @@ def test_caso_derivacion_requires_centro():
             adolescente=Adolescente(nombre="X", run="1-9"),
             causa=Causa(), medida=Medida.MCA,
         )
+
+
+def test_tabla_has_encabezados_and_filas():
+    from derivacion_drm.domain.models import Tabla
+    t = Tabla(encabezados=["A", "B"], filas=[["1", "2"], ["3", "4"]])
+    assert t.encabezados == ["A", "B"]
+    assert t.filas[1][0] == "3"
+
+
+def test_documento_cargado_carries_text_and_tablas():
+    from derivacion_drm.domain.models import DocumentoCargado, Tabla
+    d = DocumentoCargado(
+        nombre_archivo="acta.pdf",
+        texto="contenido",
+        tablas=[Tabla(encabezados=["X"], filas=[["y"]])],
+    )
+    assert d.nombre_archivo == "acta.pdf"
+    assert len(d.tablas) == 1

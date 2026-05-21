@@ -79,3 +79,19 @@ class CasoDerivacion(BaseModel):
     audiencia_pii: AudienciaPII | None = None
     observaciones: str | None = None
     centro: CentroAsignado
+
+
+class Tabla(BaseModel):
+    """Representación neutral de una tabla extraída de PDF o DOCX.
+
+    Los adaptadores convierten desde pdfplumber.Table / docx.table.Table a esto.
+    """
+    encabezados: list[str]
+    filas: list[list[str]]
+
+
+class DocumentoCargado(BaseModel):
+    """Documento ya parseado por un adaptador, listo para el pipeline domain."""
+    nombre_archivo: str
+    texto: str
+    tablas: list[Tabla] = []
