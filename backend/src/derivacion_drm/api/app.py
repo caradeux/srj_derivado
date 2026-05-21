@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from derivacion_drm.api.routers import centros, derivacion, extract
+from derivacion_drm.api.routers import catalogo, centros, derivacion, extract
 
 
 def create_app() -> FastAPI:
@@ -8,4 +8,5 @@ def create_app() -> FastAPI:
     app.include_router(extract.router)
     app.include_router(centros.router)
     app.include_router(derivacion.router)
+    app.include_router(catalogo.router)
     return app
