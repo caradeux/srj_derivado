@@ -4,12 +4,16 @@ from typing import Optional
 
 from pydantic import BaseModel, model_validator
 
+# Raíz del repo (subiendo desde backend/src/derivacion_drm/api/config.py).
+# Independiente del CWD desde donde se arranque uvicorn.
+_REPO_ROOT = Path(__file__).resolve().parents[4]
+
 
 class Settings(BaseModel):
     """Configuración leída de variables de entorno con defaults locales.
 
     BRD: la planilla y el logo viven junto al proyecto. data_dir resuelve a
-    la carpeta `data/` del repo en producción.
+    la carpeta `data/` del repo (no del CWD).
     """
     data_dir: Optional[Path] = None
     profesional_default: Optional[str] = None
@@ -17,7 +21,10 @@ class Settings(BaseModel):
     @model_validator(mode="after")
     def _set_defaults_from_env(self) -> "Settings":
         if self.data_dir is None:
-            self.data_dir = Path(os.getenv("DERIVACION_DATA_DIR", "data")).resolve()
+            env_path = os.getenv("DERIVACION_DATA_DIR")
+            self.data_dir = (
+                Path(env_path).resolve() if env_path else (_REPO_ROOT / "data").resolve()
+            )
         if self.profesional_default is None:
             self.profesional_default = os.getenv(
                 "DERIVACION_PROFESIONAL_DEFAULT",
