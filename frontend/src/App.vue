@@ -8,6 +8,7 @@ import MedidaBotonera from './components/Selectors/MedidaBotonera.vue'
 import CentroSelector from './components/Selectors/CentroSelector.vue'
 import GenerarButton from './components/Actions/GenerarButton.vue'
 import LimpiarButton from './components/Actions/LimpiarButton.vue'
+import ResumenCaso from './components/Resumen/ResumenCaso.vue'
 import Login from './components/Login.vue'
 import Icon from './components/Icon.vue'
 import { useCasoStore } from './stores/caso'
@@ -53,42 +54,32 @@ const auth = useAuthStore()
     </div>
   </header>
 
-  <main id="contenido">
-    <section class="col-izq" aria-label="Carga de documentos">
-      <h2 class="section-title">
-        <Icon name="folder-open" :size="20" />
-        <span>1. Cargar documentos judiciales</span>
-      </h2>
-      <DropZone />
+  <main id="contenido" class="workspace">
+    <article class="form">
       <CoimputadoRadio />
-    </section>
 
-    <section class="col-der" aria-label="Datos de la derivación">
-      <h2 class="section-title">
-        <Icon name="clipboard-check" :size="20" />
-        <span>2. Revisar y completar datos</span>
-      </h2>
+      <section class="form-section">
+        <h3>Documentos judiciales</h3>
+        <DropZone />
+      </section>
+
       <DatosAdolescente />
       <DatosCausa />
       <AdultoResponsable />
       <MedidaBotonera />
       <CentroSelector />
+    </article>
 
-      <div class="generar-wrap">
-        <h2 class="section-title">
-          <Icon name="award" :size="20" />
-          <span>3. Generar certificado</span>
-        </h2>
-        <GenerarButton />
-      </div>
-
+    <aside class="resumen" aria-label="Resumen y acciones">
+      <ResumenCaso />
+      <GenerarButton />
       <ul v-if="s.warnings.length > 0" class="warns" role="status" aria-live="polite">
         <li v-for="w in s.warnings" :key="w">
           <Icon name="alert-triangle" :size="18" />
           <span>{{ w }}</span>
         </li>
       </ul>
-    </section>
+    </aside>
   </main>
 
   <footer class="appfoot">
@@ -117,7 +108,7 @@ const auth = useAuthStore()
   padding: var(--sp-4) var(--sp-6);
   background: var(--color-primary);
   color: var(--color-on-primary);
-  border-bottom: 3px solid var(--color-accent);
+  border-bottom: 1px solid var(--color-primary-hover);
 }
 
 .brand { display: flex; align-items: center; gap: var(--sp-3); }
@@ -175,40 +166,42 @@ const auth = useAuthStore()
 .logout-btn:hover { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.50); }
 .logout-btn svg { width: 16px; height: 16px; }
 
-main {
+/* Workspace: form a la izquierda, resumen sticky a la derecha */
+main.workspace {
   display: grid;
-  grid-template-columns: minmax(320px, 1fr) minmax(420px, 2fr);
-  gap: var(--sp-6);
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: var(--sp-8);
   padding: var(--sp-6);
-  max-width: 1280px;
+  max-width: 1200px;
   margin: 0 auto;
 }
-.col-izq, .col-der {
-  display: flex; flex-direction: column; gap: var(--sp-4);
+
+.form { min-width: 0; }
+.form > .form-section:first-child,
+.form > .form-section:first-of-type {
+  padding-top: 0;
 }
 
-.section-title {
-  display: flex; align-items: center; gap: var(--sp-2);
-  font-family: var(--font-heading);
-  font-size: var(--fs-md);
-  font-weight: var(--fw-semibold);
-  color: var(--color-primary);
-  letter-spacing: 0.01em;
-  margin: var(--sp-2) 0 0;
-  padding-bottom: var(--sp-2);
-  border-bottom: 1px solid var(--color-border);
+aside.resumen {
+  position: sticky;
+  top: var(--sp-6);
+  align-self: start;
+  height: fit-content;
+  background: var(--color-aside-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
 }
-.section-title :deep(.icon) { color: var(--color-accent); }
-
-.generar-wrap { margin-top: var(--sp-2); }
-
 .warns {
   background: var(--color-warning-bg);
   color: var(--color-warning);
   border: 1px solid #fcd34d;
   border-radius: var(--radius);
-  padding: var(--sp-3) var(--sp-4);
-  margin: var(--sp-2) 0 0;
+  padding: var(--sp-2) var(--sp-3);
+  margin: 0;
   font-size: var(--fs-sm);
   list-style: none;
 }
@@ -216,7 +209,7 @@ main {
   display: flex; align-items: flex-start; gap: var(--sp-2);
   padding: var(--sp-1) 0;
 }
-.warns li svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; }
+.warns li svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; }
 
 .appfoot {
   text-align: center;
@@ -227,9 +220,10 @@ main {
   background: var(--color-surface);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 980px) {
   .appbar { flex-direction: column; align-items: stretch; gap: var(--sp-3); }
-  main { grid-template-columns: 1fr; padding: var(--sp-4); }
+  main.workspace { grid-template-columns: 1fr; padding: var(--sp-4); gap: var(--sp-6); }
+  aside.resumen { position: static; }
   .meta { flex-wrap: wrap; }
 }
 </style>

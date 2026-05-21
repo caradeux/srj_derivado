@@ -61,16 +61,18 @@ async function procesar() {
       @drop="onDrop"
     >
       <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+           stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
         <polyline points="17 8 12 3 7 8"/>
         <line x1="12" y1="3" x2="12" y2="15"/>
       </svg>
-      <p class="dz-title">Arrastre aquí los documentos</p>
-      <p class="dz-hint">Formatos aceptados: PDF · DOCX</p>
+      <div class="dz-text">
+        <p class="dz-title">Arrastre aquí los documentos</p>
+        <p class="dz-hint">Formatos aceptados: PDF · DOCX</p>
+      </div>
       <label class="select">
         <input type="file" multiple accept=".pdf,.docx" @change="onChange" />
-        Seleccionar archivos
+        <span>Seleccionar archivos</span>
       </label>
     </div>
 
@@ -83,9 +85,10 @@ async function procesar() {
     </div>
 
     <button
+      v-if="archivos.length > 0"
       type="button"
       class="primary"
-      :disabled="archivos.length === 0 || procesando"
+      :disabled="procesando"
       @click="procesar"
     >
       {{ procesando ? 'Procesando…' : 'Procesar documentos' }}
@@ -96,60 +99,72 @@ async function procesar() {
 </template>
 
 <style scoped>
-.drop-zone-wrap { display: flex; flex-direction: column; gap: var(--sp-3); }
+.drop-zone-wrap { display: flex; flex-direction: column; gap: var(--sp-2); }
 
 .drop-zone {
-  display: flex; flex-direction: column; align-items: center; gap: var(--sp-2);
-  border: 2px dashed var(--color-border-strong);
+  display: flex; align-items: center;
+  gap: var(--sp-3);
+  border: 1px dashed var(--color-border-strong);
   border-radius: var(--radius-md);
-  padding: var(--sp-8) var(--sp-4);
-  text-align: center;
+  padding: var(--sp-3) var(--sp-4);
   background: var(--color-surface);
   color: var(--color-fg-muted);
+  min-height: 56px;
   transition: background var(--t-base), border-color var(--t-base);
 }
 .drop-zone.over {
-  background: rgba(30, 58, 95, 0.04);
+  background: var(--color-surface-muted);
   border-color: var(--color-primary);
+  border-style: solid;
   color: var(--color-primary);
 }
 
 .upload-icon {
-  width: 40px; height: 40px;
+  width: 24px; height: 24px;
   color: var(--color-primary);
-  opacity: 0.7;
+  flex-shrink: 0;
 }
 
+.dz-text {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column;
+  gap: 0;
+}
 .dz-title {
-  margin: 0; font-size: var(--fs-base); font-weight: var(--fw-semibold);
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
   color: var(--color-fg);
+  line-height: 1.3;
 }
 .dz-hint {
-  margin: 0; font-size: var(--fs-xs);
-  color: var(--color-fg-subtle); letter-spacing: 0.02em;
-  text-transform: uppercase;
+  margin: 0;
+  font-size: var(--fs-xs);
+  color: var(--color-fg-subtle);
+  letter-spacing: 0.02em;
 }
 
 .select {
   display: inline-flex; align-items: center;
-  margin-top: var(--sp-2);
-  padding: var(--sp-2) var(--sp-4);
-  background: var(--color-surface-muted);
+  flex-shrink: 0;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--color-surface);
   color: var(--color-primary);
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius);
   font-size: var(--fs-sm);
   font-weight: var(--fw-semibold);
   cursor: pointer;
+  white-space: nowrap;
   transition: background var(--t-fast), border-color var(--t-fast);
 }
-.select:hover { background: var(--color-surface); border-color: var(--color-primary); }
+.select:hover { background: var(--color-surface-muted); border-color: var(--color-primary); }
 .select input { display: none; }
 
 .lista { display: flex; flex-direction: column; gap: var(--sp-1); }
 
 .primary {
-  min-height: var(--control-h-lg);
+  min-height: 40px;
   background: var(--color-primary);
   color: var(--color-on-primary);
   border: 1px solid var(--color-primary);
@@ -175,5 +190,14 @@ async function procesar() {
   padding: var(--sp-2) var(--sp-3);
   font-size: var(--fs-sm);
   margin: 0;
+}
+
+@media (max-width: 640px) {
+  .drop-zone {
+    flex-direction: column; align-items: stretch;
+    text-align: center;
+  }
+  .upload-icon { align-self: center; }
+  .select { justify-content: center; }
 }
 </style>

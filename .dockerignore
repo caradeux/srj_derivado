@@ -1,0 +1,38 @@
+# Node / frontend
+**/node_modules
+frontend/dist
+frontend/.vite
+
+# Python
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/.venv
+**/.pytest_cache
+**/.ruff_cache
+**/.mypy_cache
+
+# IDE / OS
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Tests y artefactos locales
+**/tests
+backend/tests
+smoke_output.docx
+*.docx
+
+# Docs y planes (no necesarios en runtime)
+docs
+README.md
+CLAUDE.md
+
+# Scripts dev
+scripts/dev.ps1

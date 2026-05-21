@@ -1,6 +1,6 @@
-/* Design tokens — estilo "Accessible & Ethical" (institucional / judicial)
- * Paleta: navy + green CTA. WCAG AA / AAA.
- * Tipografía: EB Garamond (headings) + Lato (body).
+/* Design tokens — estilo institucional / judicial
+ * Paleta monocromática: navy S.N.R.S.J. + grises carbono. Cero verde funcional.
+ * WCAG AA / AAA. Tipografía: EB Garamond (headings) + Lato (body).
  */
 @import url("https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600;700&family=Lato:wght@400;500;700&display=swap");
 
@@ -9,9 +9,9 @@
   --color-primary:        #1E3A5F;  /* navy institucional */
   --color-primary-hover:  #16304D;
   --color-on-primary:     #FFFFFF;
-  --color-secondary:      #2563EB;  /* blue para links / acentos secundarios */
-  --color-accent:         #059669;  /* green para CTA principal */
-  --color-accent-hover:   #047857;
+  --color-secondary:      #475569;  /* gris carbono para links / acentos secundarios */
+  --color-accent:         #1E3A5F;  /* alias temporal → primary (verde purgado; eliminar tras commit 4) */
+  --color-accent-hover:   #16304D;  /* alias temporal → primary-hover (eliminar tras commit 4) */
 
   --color-bg:             #F8FAFC;  /* fondo de la app */
   --color-surface:        #FFFFFF;  /* tarjetas, fieldsets */
@@ -24,12 +24,17 @@
   --color-border-strong:  #CBD5E1;
   --color-ring:           #1E3A5F;
 
-  --color-success:        #059669;
-  --color-success-bg:     #ECFDF5;
+  --color-success:        #1E3A5F;  /* alias temporal → primary (verde purgado) */
+  --color-success-bg:     #F1F5F9;  /* alias temporal → surface-muted */
   --color-warning:        #B45309;
   --color-warning-bg:     #FEF3C7;
   --color-danger:         #DC2626;
   --color-danger-bg:      #FEF2F2;
+
+  /* Capa de superficie y separadores (introducidos para el rediseño v1) */
+  --color-rule:           #E5E7EB;  /* línea fina entre secciones del form */
+  --color-aside-bg:       #F8FAFC;  /* fondo del aside resumen */
+  --color-fg-on-aside:    #475569;  /* texto del aside */
 
   /* Tipografía */
   --font-heading: "EB Garamond", "Times New Roman", Georgia, serif;
@@ -63,6 +68,7 @@
   --sp-8:  32px;
   --sp-10: 40px;
   --sp-12: 48px;
+  --sp-section: 20px;       /* separación vertical entre secciones del form (rediseño v1) */
 
   /* Radii */
   --radius-sm: 4px;
@@ -80,8 +86,9 @@
   --ring-offset: 2px;
 
   /* Tamaños mínimos (touch / accesibilidad) */
-  --control-h: 40px;        /* altura mínima de inputs/selects */
-  --control-h-lg: 44px;     /* botones / CTA */
+  --control-h: 40px;         /* altura mínima de inputs/selects */
+  --control-h-lg: 44px;      /* botones / CTA */
+  --control-h-compact: 36px; /* alternativa densa (rediseño v1) */
 
   /* Transitions */
   --t-fast: 120ms ease-out;
@@ -215,3 +222,64 @@ button {
               transform var(--t-fast);
 }
 button:disabled { cursor: not-allowed; }
+
+/* Form layout utilities (rediseño v1)
+ * Clases globales para que los componentes del form sean templates puros,
+ * sin CSS duplicado de fieldset+shadow. Reemplazan el patrón de "card" anterior.
+ */
+.form-section {
+  padding: var(--sp-section) 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+.form-section:first-child {
+  padding-top: 0;
+}
+.form-section > h3 {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-md);
+  color: var(--color-primary);
+  margin: 0 0 var(--sp-3);
+}
+.form-section > h3 em {
+  font-style: normal;
+  font-weight: var(--fw-regular);
+  color: var(--color-fg-subtle);
+  font-size: var(--fs-sm);
+  margin-left: var(--sp-1);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--sp-3) var(--sp-4);
+}
+.form-grid > label {
+  display: flex; flex-direction: column;
+  gap: var(--sp-1);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--color-fg-muted);
+}
+.form-grid > .col-3  { grid-column: span 3; }
+.form-grid > .col-4  { grid-column: span 4; }
+.form-grid > .col-5  { grid-column: span 5; }
+.form-grid > .col-6  { grid-column: span 6; }
+.form-grid > .col-8  { grid-column: span 8; }
+.form-grid > .col-9  { grid-column: span 9; }
+.form-grid > .col-12 { grid-column: 1 / -1; }
+
+.form-grid > .checkbox-inline {
+  flex-direction: row; align-items: center; gap: var(--sp-2);
+  padding-top: var(--sp-2);
+  color: var(--color-fg);
+}
+.form-grid > .checkbox-inline input[type="checkbox"] {
+  width: 18px; height: 18px; min-height: 0; padding: 0;
+  accent-color: var(--color-primary);
+}
+
+@media (max-width: 640px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .form-grid > [class*="col-"] { grid-column: 1 / -1; }
+}

@@ -2,7 +2,6 @@
 import { computed } from 'vue'
 import { useCasoStore } from '../../stores/caso'
 import { useCatalogosStore } from '../../stores/catalogos'
-import Icon from '../Icon.vue'
 
 const s = useCasoStore()
 const cat = useCatalogosStore()
@@ -14,15 +13,11 @@ const opcionesIpIrc = computed(() =>
 </script>
 
 <template>
-  <fieldset v-if="s.medida">
-    <legend>
-      <Icon name="map-pin" :size="18" />
-      <span>Centro de cumplimiento</span>
-    </legend>
+  <section v-if="s.medida" class="form-section">
+    <h3>Centro de cumplimiento</h3>
 
-    <!-- IP/IRC: dropdown desde catálogo hardcoded -->
-    <div v-if="esIpIrc">
-      <label>Centro IP/IRC de ingreso
+    <div v-if="esIpIrc" class="form-grid">
+      <label class="col-12">Centro IP/IRC de ingreso
         <select
           :value="s.centroSeleccionado ? s.centroSeleccionado.nombre : ''"
           @change="(e) => {
@@ -38,17 +33,18 @@ const opcionesIpIrc = computed(() =>
       </label>
     </div>
 
-    <!-- Estándar: radio si >1, info si =1, error si =0 -->
     <div v-else>
-      <p v-if="s.centrosDisponibles.length === 0" class="error">
+      <p v-if="s.centrosDisponibles.length === 0" class="banner banner-error">
         Sin centros para la combinación medida × comuna.
       </p>
-      <p v-else-if="s.centrosDisponibles.length === 1" class="info">
+      <p v-else-if="s.centrosDisponibles.length === 1" class="banner banner-info">
         Centro asignado: <strong>{{ s.centrosDisponibles[0].nombre }}</strong>
-        ({{ s.centrosDisponibles[0].tipo }})
+        <span class="tipo">({{ s.centrosDisponibles[0].tipo }})</span>
       </p>
-      <div v-else>
-        <p>Hay {{ s.centrosDisponibles.length }} centros para esta combinación. Elija uno:</p>
+      <div v-else class="opciones">
+        <p class="opciones-titulo">
+          Hay {{ s.centrosDisponibles.length }} centros para esta combinación. Elija uno:
+        </p>
         <label v-for="(c, i) in s.centrosDisponibles" :key="i" class="opt">
           <input
             type="radio" name="centro"
@@ -60,58 +56,45 @@ const opcionesIpIrc = computed(() =>
         </label>
       </div>
     </div>
-  </fieldset>
+  </section>
 </template>
 
 <style scoped>
-fieldset {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  padding: var(--sp-4) var(--sp-5);
+.banner {
+  border-radius: var(--radius);
+  padding: var(--sp-2) var(--sp-3);
+  font-size: var(--fs-sm);
+  margin: 0;
 }
-legend {
-  display: inline-flex; align-items: center; gap: var(--sp-2);
-  font-family: var(--font-heading);
-  font-weight: var(--fw-semibold);
-  font-size: var(--fs-md);
-  color: var(--color-primary);
-  padding: 0 var(--sp-2);
+.banner-info {
+  background: var(--color-surface-muted);
+  color: var(--color-fg);
+  border-left: 3px solid var(--color-primary);
 }
-legend :deep(.icon) { color: var(--color-accent); }
-label {
-  display: flex; flex-direction: column; gap: var(--sp-1);
-  font-size: var(--fs-sm); font-weight: var(--fw-medium);
+.banner-info .tipo {
+  color: var(--color-fg-subtle);
+  margin-left: var(--sp-1);
+}
+.banner-error {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  border-left: 3px solid var(--color-danger);
+}
+
+.opciones { display: flex; flex-direction: column; gap: var(--sp-1); }
+.opciones-titulo {
+  font-size: var(--fs-sm);
   color: var(--color-fg-muted);
-  margin-top: var(--sp-2);
+  margin: 0 0 var(--sp-1);
 }
 .opt {
-  display: flex; flex-direction: row; align-items: center; gap: var(--sp-2);
-  padding: var(--sp-1) 0; font-size: var(--fs-sm);
-  color: var(--color-fg); cursor: pointer;
-  margin-top: 0;
+  display: flex; align-items: center; gap: var(--sp-2);
+  padding: var(--sp-1) 0;
+  font-size: var(--fs-sm); color: var(--color-fg);
+  cursor: pointer;
 }
 .opt input[type="radio"] {
   width: 18px; height: 18px; min-height: 0; padding: 0;
   accent-color: var(--color-primary);
-}
-.error {
-  color: var(--color-danger);
-  background: var(--color-danger-bg);
-  border: 1px solid #FECACA;
-  border-radius: var(--radius);
-  padding: var(--sp-2) var(--sp-3);
-  font-size: var(--fs-sm);
-  margin: var(--sp-2) 0 0;
-}
-.info {
-  color: var(--color-success);
-  background: var(--color-success-bg);
-  border: 1px solid #A7F3D0;
-  border-radius: var(--radius);
-  padding: var(--sp-2) var(--sp-3);
-  font-size: var(--fs-sm);
-  margin: var(--sp-2) 0 0;
 }
 </style>

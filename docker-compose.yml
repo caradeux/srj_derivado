@@ -1,0 +1,23 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: srj-derivacion
+    ports:
+      - "3012:8000"
+    restart: unless-stopped
+    environment:
+      # data_dir resuelve por defecto a /app/data; aquí lo dejamos explícito.
+      DERIVACION_DATA_DIR: /app/data
+      DERIVACION_PROFESIONAL_DEFAULT: "Juan Manuel Olivares Oyarzún"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/catalogo/medidas').read()"
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
