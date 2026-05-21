@@ -26,12 +26,12 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-# Backend: instalar dependencias antes del código para aprovechar cache
-COPY backend/pyproject.toml backend/
+# Backend: copiar código completo antes del install
+# (setuptools.packages.find requiere que src/ exista al instalar el editable)
+COPY backend/ backend/
 RUN cd backend && pip install --no-cache-dir -e .
 
-# Código + datos + frontend buildeado
-COPY backend/src backend/src
+# Datos + frontend buildeado
 COPY data data
 COPY --from=frontend-builder /build/dist frontend/dist
 
