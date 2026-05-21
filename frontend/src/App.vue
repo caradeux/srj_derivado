@@ -8,11 +8,17 @@ import MedidaBotonera from './components/Selectors/MedidaBotonera.vue'
 import CentroSelector from './components/Selectors/CentroSelector.vue'
 import GenerarButton from './components/Actions/GenerarButton.vue'
 import LimpiarButton from './components/Actions/LimpiarButton.vue'
+import Login from './components/Login.vue'
 import { useCasoStore } from './stores/caso'
+import { useAuthStore } from './stores/auth'
 const s = useCasoStore()
+const auth = useAuthStore()
 </script>
 
 <template>
+  <Login v-if="!auth.autenticado" />
+
+  <template v-else>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
   <header class="appbar">
@@ -33,6 +39,16 @@ const s = useCasoStore()
         <input v-model="s.profesional" type="text" />
       </label>
       <LimpiarButton />
+      <button type="button" class="logout-btn" @click="auth.cerrarSesion()"
+              aria-label="Cerrar sesión">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        <span>Cerrar sesión</span>
+      </button>
     </div>
   </header>
 
@@ -73,6 +89,7 @@ const s = useCasoStore()
   <footer class="appfoot">
     Av. Pedro De Valdivia N° 4070, Ñuñoa · Fono: 22.3980.04.00
   </footer>
+  </template>
 </template>
 
 <style>
@@ -138,6 +155,20 @@ const s = useCasoStore()
   font-size: var(--fs-sm);
 }
 .meta-field--prof input { min-width: 240px; }
+
+.logout-btn {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  min-height: 36px;
+  background: transparent;
+  color: var(--color-on-primary);
+  border: 1px solid rgba(255,255,255,0.30);
+  border-radius: var(--radius);
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+}
+.logout-btn:hover { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.50); }
+.logout-btn svg { width: 16px; height: 16px; }
 
 main {
   display: grid;
