@@ -36,3 +36,22 @@ def sample_docx_path(tmp_path: Path) -> Path:
     tabla.cell(1, 1).text = "22.846.782-0"
     d.save(str(p))
     return p
+
+
+@pytest.fixture
+def sample_excel_path(tmp_path: Path) -> Path:
+    import pandas as pd
+    p = tmp_path / "catalogo.xlsx"
+    df = pd.DataFrame({
+        "PROGRAMA": ["MCA Centro Sur", "LAE Oriente"],
+        "Tipo de medida o sanción": ["MCA", "LAE"],
+        "COMUNAS PRIORIZADAS": ["Lo Espejo, La Cisterna", "Peñalolén"],
+        "COMUNAS NO PRIORIZADAS": ["", "La Reina, Las Condes"],
+        "DIRECCION": ["Av Sur 100", "Av Oriente 200"],
+        "DIRECTOR": ["Pedro Soto", "Ana Vidal"],
+        "CONTACTO MAIL": ["pedro@x.cl", "ana@y.cl"],
+        "TELEFONO": ["22 111", "22 222"],
+    })
+    with pd.ExcelWriter(p) as w:
+        df.to_excel(w, sheet_name="Desacumulado", index=False)
+    return p
