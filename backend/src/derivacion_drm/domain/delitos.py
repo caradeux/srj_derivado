@@ -1,0 +1,21 @@
+# BRD §13.5: ~50 delitos comunes en causas RPA
+DELITOS_COMUNES: list[str] = [
+    "robo con violencia", "robo con intimidación", "robo en lugar habitado",
+    "robo en lugar no habitado", "robo por sorpresa", "robo con fuerza",
+    "hurto", "hurto simple", "hurto agravado",
+    "tráfico ilícito de estupefacientes", "microtráfico",
+    "porte ilegal de arma", "porte de munición",
+    "lesiones graves", "lesiones menos graves", "lesiones leves",
+    "abuso sexual", "violación", "estupro",
+    "homicidio", "homicidio simple", "homicidio calificado", "femicidio",
+    "receptación", "daños", "amenazas",
+    "manejo en estado de ebriedad", "conducción en estado de ebriedad",
+    "infracción a la ley de drogas",
+    "asociación ilícita", "extorsión",
+    "violencia intrafamiliar", "desórdenes públicos",
+    "incendio", "estafa", "apropiación indebida",
+    "encubrimiento", "obstrucción a la justicia",
+    "secuestro", "trata de personas",
+    "abigeato", "infracción a la ley de armas",
+    "infracción a la ley 20.000",
+]
