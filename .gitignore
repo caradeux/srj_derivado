@@ -27,3 +27,4 @@ Thumbs.db
 
 # Local data sensitive
 data/*.local.*
+smoke_output.docx
